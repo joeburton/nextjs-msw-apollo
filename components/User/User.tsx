@@ -13,7 +13,7 @@ const ViewerQuery = gql`
   }
 `;
 
-export const IndexPage = () => {
+const User = () => {
   const { data, loading } = useQuery(ViewerQuery);
 
   return (
@@ -32,3 +32,5 @@ export const IndexPage = () => {
     </div>
   );
 };
+
+export default User;

@@ -1,8 +1,8 @@
-import { IndexPage } from '../src/index';
+import { User } from '../components/';
 
 const Index = ({ data }) => {
   console.log(data);
-  return <IndexPage />;
+  return <User />;
 };
 
 export async function getStaticProps() {

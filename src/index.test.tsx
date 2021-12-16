@@ -1,29 +1,28 @@
-import { ApolloProvider } from "@apollo/client";
-import "@testing-library/jest-dom/extend-expect";
-import { act, render, screen } from "@testing-library/react";
-import { initializeApollo } from "../apollo/client";
-import { IndexPage } from "./index";
+import { ApolloProvider } from '@apollo/client';
+import '@testing-library/jest-dom/extend-expect';
+import { render, waitFor } from '@testing-library/react';
+import apolloClient from '../apollo/client';
+import { IndexPage } from './index';
 
-async function wait(ms = 0) {
-  await act(() => {
-    // you could use wait here instead if you prefer
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  });
-}
-describe("index", () => {
-  test("view index", async () => {
-    render(
-      <ApolloProvider client={initializeApollo()}>
+describe('index', () => {
+  it('view index', async () => {
+    const { getByTestId, debug } = render(
+      <ApolloProvider client={apolloClient}>
         <IndexPage />
       </ApolloProvider>
     );
 
-    await wait();
+    await waitFor(() => expect(getByTestId('loading')).toBeInTheDocument());
+    await waitFor(() => expect(getByTestId('details')).toBeInTheDocument());
 
-    screen.debug();
+    debug();
 
-    expect(screen.queryByText(/cached/)).toBeInTheDocument();
+    const details = getByTestId('details');
+
+    expect(details).toHaveTextContent(
+      /^You're signed in as John Smith and you're live goto static page.$/
+    );
+
+    expect(details).toHaveTextContent(/John Smith/);
   });
 });

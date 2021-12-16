@@ -1,31 +1,14 @@
-import gql from "graphql-tag";
-import { initializeApollo } from "../apollo/client";
-import { IndexPage } from "../src/index";
+import { IndexPage } from '../src/index';
 
-const ViewerQuery = gql`
-  query ViewerQuery {
-    viewer {
-      id
-      name
-      status
-    }
-  }
-`;
-
-const Index = () => {
+const Index = ({ data }) => {
+  console.log(data);
   return <IndexPage />;
 };
 
 export async function getStaticProps() {
-  const apolloClient = initializeApollo();
-
-  await apolloClient.query({
-    query: ViewerQuery,
-  });
-
   return {
     props: {
-      initialApolloState: apolloClient.cache.extract(),
+      data: [{ name: 'Joe Burton', dob: '04/10/79', gender: 'male' }],
     },
   };
 }

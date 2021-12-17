@@ -7,7 +7,7 @@ const cache = new InMemoryCache({
       fields: {
         viewer: {
           merge(_existing, incoming) {
-            // console.log(_existing, incoming);
+            // console.log(_existing, incoming)
             return incoming;
           },
         },
